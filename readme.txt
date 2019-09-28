@@ -173,6 +173,67 @@ https://futurestud.io/tutorials/glide-caching-basics
         - Glide 4.x: DiskCacheStrategy.RESOURCE Glide 3.x: DiskCacheStrategy.RESULT caches only the final image, after reducing the resolution (and possibly transformations) (default behavior of Glide 3.x)
         - Glide 4.x only: DiskCacheStrategy.AUTOMATIC intelligently chooses a cache strategy based on the resource (default behavior of Glide 4.x)
         - Glide 3.x & 4.x: DiskCacheStrategy.ALL caches all versions of the image
-        <= Got clean build: crashes trying to display an image...
+
+  - A/S > Debug tutorial:
+    - Build => OK
+    - Gallery => OK
+    - Click on gallery image => OK
+     
 ===================================================================================================
+9.26.2019:
+---------
+*  Checked initial version in to Git, GitHub:
+https://help.github.com/en/articles/adding-an-existing-project-to-github-using-the-command-line
+    1. Create a new repository on GitHub => https://github.com/paulsm4/HelloGlide.git
+    2. Create local repository, add files, commit
+    3. Git bash: Add remote; push local
+         git remote add origin https://github.com/paulsm4/HelloGlide.git
+         git remote -v  # Verify
+         git push origin master
+    4. Verify GitHub project in browser:
+         https://github.com/paulsm4/HelloGlide
+
+*  Added "public static Intent newIntent()" to all activities:
+   EXAMPLE:
+   - SpacePhotoActivity.java:
+     -----------------------
+public class SpacePhotoActivity extends AppCompatActivity {
+    public static final String EXTRA_SPACE_PHOTO = "SpacePhotoActivity.SPACE_PHOTO";
+    ...
+    public static Intent newIntent(Context packageContext, SpacePhoto spacePhoto) {
+        Intent intent = new Intent(packageContext, SpacePhotoActivity.class);
+        intent.putExtra(SpacePhotoActivity.EXTRA_SPACE_PHOTO, spacePhoto);
+        return intent;
+    }
+
+   - SpaceGalleryActivity.java:
+     --------------------------
+public class SpaceGalleryActivity extends AppCompatActivity {
+    ...
+    private class ImageGalleryAdapter extends RecyclerView.Adapter<ImageGalleryAdapter.MyViewHolder>  {
+        ...
+        public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+            ...
+            @Override
+            public void onClick(View view) {
+
+                int position = getAdapterPosition();
+                if(position != RecyclerView.NO_POSITION) {
+                    SpacePhoto spacePhoto = mSpacePhotos[position];
+                    Intent intent = SpacePhotoActivity.newIntent(mContext, spacePhoto);
+                    startActivity(intent);
+                }
+
+* HelloGlide (EVE):
+  - HelloGlide: Added "Browse Android Gallery" button =>
+ClipData { text/uri-list {U:content://com.google.android.apps.photos.contentprovider/-1/1/content%3A%2F%2Fmedia%2Fexternal%2Fimages%2Fmedia%2F32/ORIGINAL/NONE/562073873} }
+
+  - How to save an image to Android Gallery:
+https://stackoverflow.com/questions/20859584/how-to-save-image-in-android-gallery
+    <= Need to save image from wherever it exists to the "MediaStore provider"
+
+  - HelloGlide: Added "Browse File System" button:
+https://stackoverflow.com/questions/7856959/android-file-chooser
+   
+  << OK: at this point we have all the pieces we need for an "import image file into Android Gallery" if we need one... >>
 

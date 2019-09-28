@@ -16,6 +16,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class SpaceGalleryActivity extends AppCompatActivity {
 
+    private static final String TAG = "SpaceGalleryActivity";
+
+    public static Intent newIntent(Context packageContext) {
+        Intent intent = new Intent(packageContext, SpaceGalleryActivity.class);
+        return intent;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,8 +84,7 @@ public class SpaceGalleryActivity extends AppCompatActivity {
                 int position = getAdapterPosition();
                 if(position != RecyclerView.NO_POSITION) {
                     SpacePhoto spacePhoto = mSpacePhotos[position];
-                    Intent intent = new Intent(mContext, SpacePhotoActivity.class);
-                    intent.putExtra(SpacePhotoActivity.EXTRA_SPACE_PHOTO, spacePhoto);
+                    Intent intent = SpacePhotoActivity.newIntent(mContext, spacePhoto);
                     startActivity(intent);
                 }
             }
